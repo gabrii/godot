@@ -324,6 +324,14 @@
 			<description>
 			</description>
 		</method>
+		<method name="set_draw_breakpoint_gutter">
+			<return type="void">
+			</return>
+			<argument index="0" name="enable" type="bool">
+			</argument>
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="caret_blink" type="bool" setter="cursor_set_blink_enabled" getter="cursor_get_blink_enabled">
