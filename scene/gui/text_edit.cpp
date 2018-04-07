@@ -44,7 +44,7 @@
 #define TAB_PIXELS
 
 inline bool _is_symbol(CharType c) {
-
+	return false;
 	return is_symbol(c);
 }
 
@@ -598,6 +598,12 @@ void TextEdit::_notification(int p_what) {
 					lc /= 10;
 				};
 
+				if (cache.line_number_w < 3) {
+					cache.line_number_w = 3;
+				} else {
+					cache.line_number_w += 1;
+				}
+
 				if (line_numbers) {
 
 					line_number_char_count = cache.line_number_w;
@@ -870,10 +876,12 @@ void TextEdit::_notification(int p_what) {
 
 				if (text.is_breakpoint(line) && !draw_breakpoint_gutter) {
 #ifdef TOOLS_ENABLED
-					VisualServer::get_singleton()->canvas_item_add_rect(ci, Rect2(xmargin_beg + ofs_x, ofs_y + get_row_height() - EDSCALE, xmargin_end - xmargin_beg, EDSCALE), cache.breakpoint_color);
+                                       VisualServer::get_singleton()->canvas_item_add_rect(ci, Rect2(xmargin_beg + ofs_x, ofs_y + get_row_height() - EDSCALE, xmargin_end - xmargin_beg, EDSCALE), cache.breakpoint_color);
 #else
-					VisualServer::get_singleton()->canvas_item_add_rect(ci, Rect2(xmargin_beg + ofs_x, ofs_y, xmargin_end - xmargin_beg, get_row_height()), cache.breakpoint_color);
+                                       VisualServer::get_singleton()->canvas_item_add_rect(ci, Rect2(xmargin_beg + ofs_x, ofs_y, xmargin_end - xmargin_beg, get_row_height()), cache.breakpoint_color);
 #endif
+
+					VisualServer::get_singleton()->canvas_item_add_circle(ci, Vector2(xmargin_beg + ofs_x, ofs_y + get_row_height() - EDSCALE), 5, cache.breakpoint_color);
 				}
 
 				// draw breakpoint marker
@@ -884,7 +892,7 @@ void TextEdit::_notification(int p_what) {
 						int marker_height = get_row_height() - (vertical_gap * 2);
 						int marker_width = cache.breakpoint_gutter_width - (horizontal_gap * 2);
 						// no transparency on marker
-						VisualServer::get_singleton()->canvas_item_add_rect(ci, Rect2(cache.style_normal->get_margin(MARGIN_LEFT) + horizontal_gap - 2, ofs_y + vertical_gap, marker_width, marker_height), Color(cache.breakpoint_color.r, cache.breakpoint_color.g, cache.breakpoint_color.b));
+						VisualServer::get_singleton()->canvas_item_add_circle(ci, Vector2(cache.style_normal->get_margin(MARGIN_LEFT) + horizontal_gap +11 , ofs_y + vertical_gap), 6, Color(cache.breakpoint_color.r, cache.breakpoint_color.g, cache.breakpoint_color.b));
 					}
 				}
 
@@ -5875,10 +5883,10 @@ Map<int, TextEdit::HighlighterInfo> TextEdit::_get_line_syntax_highlighting(int 
 			in_keyword = false;
 		}
 
-		if (in_region == -1 && !in_keyword && is_char && !prev_is_char) {
+		if (true) {
 
 			int to = j;
-			while (to < str.length() && _is_text_char(str[to]))
+			//while (to < str.length() && _is_text_char(str[to]))
 				to++;
 
 			uint32_t hash = String::hash(&str[j], to - j);
