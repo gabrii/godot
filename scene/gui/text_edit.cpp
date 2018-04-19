@@ -1373,8 +1373,8 @@ void TextEdit::_notification(int p_what) {
 			OS::get_singleton()->set_ime_position(get_global_position() + cursor_pos);
 			OS::get_singleton()->set_ime_intermediate_text_callback(_ime_text_callback, this);
 
-			if (OS::get_singleton()->has_virtual_keyboard())
-				OS::get_singleton()->show_virtual_keyboard(get_text(), get_global_rect());
+			//if (OS::get_singleton()->has_virtual_keyboard())
+			//	OS::get_singleton()->show_virtual_keyboard(get_text(), get_global_rect());
 			if (raised_from_completion) {
 				VisualServer::get_singleton()->canvas_item_set_z_index(get_canvas_item(), 1);
 			}
@@ -1386,8 +1386,8 @@ void TextEdit::_notification(int p_what) {
 			ime_text = "";
 			ime_selection = Point2();
 
-			if (OS::get_singleton()->has_virtual_keyboard())
-				OS::get_singleton()->hide_virtual_keyboard();
+			//if (OS::get_singleton()->has_virtual_keyboard())
+			//	OS::get_singleton()->hide_virtual_keyboard();
 			if (raised_from_completion) {
 				VisualServer::get_singleton()->canvas_item_set_z_index(get_canvas_item(), 0);
 			}
